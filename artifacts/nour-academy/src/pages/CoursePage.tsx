@@ -214,7 +214,7 @@ export default function CoursePage() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="inline-block bg-amber-400 text-gray-900 px-4 py-1 rounded-full text-sm font-bold mb-5 tracking-wide"
+            className="inline-block bg-slate-300 text-gray-900 px-4 py-1 rounded-full text-sm font-bold mb-5 tracking-wide"
           >
             {badge}
           </motion.span>
@@ -323,7 +323,7 @@ export default function CoursePage() {
             <h3 className="text-2xl font-bold mb-4">التسجيل والأسعار</h3>
             {price ? (
               <>
-                <div className="text-4xl font-bold text-amber-400 mb-2">{price.split(" / ")[0]}</div>
+                <div className="text-4xl font-bold text-slate-300 mb-2">{price.split(" / ")[0]}</div>
                 {price.includes(" / ") && (
                   <p className="text-white/60 mb-8 text-sm">/ {price.split(" / ")[1]}</p>
                 )}
@@ -336,7 +336,7 @@ export default function CoursePage() {
             )}
             <a
               href={`${base}/#registration`}
-              className="block w-full bg-amber-400 text-gray-900 text-center py-4 rounded-2xl font-bold text-lg hover:bg-amber-300 transition-all"
+              className="block w-full bg-slate-300 text-gray-900 text-center py-4 rounded-2xl font-bold text-lg hover:bg-slate-200 transition-all"
             >
               احجز مقعدك الآن
             </a>
