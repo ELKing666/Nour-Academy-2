@@ -1,11 +1,11 @@
 export type Lang = "ar" | "en" | "fr" | "es" | "de";
 
-export const LANGUAGES: { code: Lang; label: string; flag: string; dir: "rtl" | "ltr" }[] = [
-  { code: "ar", label: "العربية", flag: "🇩🇿", dir: "rtl" },
-  { code: "en", label: "English",  flag: "🇬🇧", dir: "ltr" },
-  { code: "fr", label: "Français", flag: "🇫🇷", dir: "ltr" },
-  { code: "es", label: "Español",  flag: "🇪🇸", dir: "ltr" },
-  { code: "de", label: "Deutsch",  flag: "🇩🇪", dir: "ltr" },
+export const LANGUAGES: { code: Lang; label: string; countryCode: string; dir: "rtl" | "ltr" }[] = [
+  { code: "ar", label: "العربية", countryCode: "DZ", dir: "rtl" },
+  { code: "en", label: "English",  countryCode: "GB", dir: "ltr" },
+  { code: "fr", label: "Français", countryCode: "FR", dir: "ltr" },
+  { code: "es", label: "Español",  countryCode: "ES", dir: "ltr" },
+  { code: "de", label: "Deutsch",  countryCode: "DE", dir: "ltr" },
 ];
 
 export const translations = {

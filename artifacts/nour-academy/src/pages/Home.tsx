@@ -54,6 +54,7 @@ import { useSiteContent } from "@/hooks/use-site-content";
 import { useCourses } from "@/hooks/use-courses";
 import { useLang } from "@/contexts/LanguageContext";
 import { LANGUAGES } from "@/i18n/translations";
+import ReactCountryFlag from "react-country-flag";
 
 // --- Course Icon Map ---
 const COURSE_ICON_MAP: Record<string, LucideIcon> = {
@@ -133,7 +134,11 @@ function LanguageDropdown() {
         className="flex items-center gap-1.5 text-white hover:text-gold transition-colors font-medium text-sm px-2 py-1.5 rounded-lg hover:bg-white/10"
         aria-label="Select language"
       >
-        <span className="text-base leading-none">{current.flag}</span>
+        <ReactCountryFlag
+          countryCode={current.countryCode}
+          svg
+          style={{ width: "1.25em", height: "1.25em", borderRadius: "2px" }}
+        />
         <span>{current.label}</span>
         <ChevronDown size={13} className={`transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
@@ -155,7 +160,11 @@ function LanguageDropdown() {
                   l.code === lang ? "text-primary font-bold bg-red-50/60" : "text-gray-700"
                 }`}
               >
-                <span className="text-lg leading-none">{l.flag}</span>
+                <ReactCountryFlag
+                  countryCode={l.countryCode}
+                  svg
+                  style={{ width: "1.4em", height: "1.4em", borderRadius: "2px" }}
+                />
                 <span>{l.label}</span>
               </button>
             ))}
@@ -255,7 +264,11 @@ function Navbar() {
                       : "bg-white/15 text-white hover:bg-white/25"
                   }`}
                 >
-                  <span className="text-base leading-none">{l.flag}</span>
+                  <ReactCountryFlag
+                    countryCode={l.countryCode}
+                    svg
+                    style={{ width: "1.2em", height: "1.2em", borderRadius: "2px" }}
+                  />
                   <span>{l.label}</span>
                 </button>
               ))}
