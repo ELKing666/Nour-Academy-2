@@ -1,0 +1,13 @@
+node_modules
+**/node_modules
+**/.git
+.git
+.replit
+replit.nix
+.local
+.upm
+attached_assets
+artifacts/mockup-sandbox
+**/*.log
+**/dist
+**/tsconfig.tsbuildinfo
