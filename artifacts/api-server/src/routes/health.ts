@@ -15,6 +15,10 @@ router.get("/healthz", (_req, res) => {
 });
 
 router.get("/health", async (_req, res) => {
+  if (!process.env.DATABASE_URL) {
+    return res.status(200).json({ status: "ok", db: "not_configured" });
+  }
+
   let timer: ReturnType<typeof setTimeout> | undefined;
 
   const timeout = new Promise<never>((_, reject) => {
@@ -26,9 +30,9 @@ router.get("/health", async (_req, res) => {
 
   try {
     await Promise.race([pool.query("SELECT 1"), timeout]);
-    res.status(200).json({ status: "ok", db: "ok" });
+    return res.status(200).json({ status: "ok", db: "ok" });
   } catch {
-    res.status(503).json({ status: "error", db: "unreachable" });
+    return res.status(503).json({ status: "error", db: "unreachable" });
   } finally {
     clearTimeout(timer);
   }
