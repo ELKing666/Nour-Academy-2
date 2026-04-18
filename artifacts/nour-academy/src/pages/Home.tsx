@@ -224,14 +224,17 @@ function Navbar() {
           </Button>
         </div>
 
-        {/* Mobile: hamburger */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <Menu size={28} />
-        </button>
+        {/* Mobile: language toggle + hamburger */}
+        <div className="md:hidden flex items-center gap-2">
+          <LanguageDropdown />
+          <button
+            className="text-white p-1"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            <Menu size={28} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -251,28 +254,6 @@ function Navbar() {
             <a href="#testimonials" onClick={() => setMobileOpen(false)}>{t.nav.testimonials}</a>
             <a href="#faq" onClick={() => setMobileOpen(false)}>{t.nav.faq}</a>
             <a href="#branches" onClick={() => setMobileOpen(false)}>{t.nav.branches}</a>
-
-            {/* Language pills in mobile menu */}
-            <div className="border-t border-white/20 pt-4 flex flex-wrap justify-center gap-2">
-              {LANGUAGES.map((l) => (
-                <button
-                  key={l.code}
-                  onClick={() => { setLang(l.code); setMobileOpen(false); }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                    l.code === lang
-                      ? "bg-gold text-primary"
-                      : "bg-white/15 text-white hover:bg-white/25"
-                  }`}
-                >
-                  <ReactCountryFlag
-                    countryCode={l.countryCode}
-                    svg
-                    style={{ width: "1.2em", height: "1.2em", borderRadius: "2px" }}
-                  />
-                  <span>{l.label}</span>
-                </button>
-              ))}
-            </div>
 
             <Button
               asChild
