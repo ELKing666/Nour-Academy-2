@@ -52,9 +52,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSiteContent } from "@/hooks/use-site-content";
 import { useCourses } from "@/hooks/use-courses";
+import type { Course } from "@/hooks/use-courses";
 import { useLang } from "@/contexts/LanguageContext";
 import { LANGUAGES } from "@/i18n/translations";
 import ReactCountryFlag from "react-country-flag";
+import { useAutoTranslate } from "@/hooks/use-auto-translate";
+import { translateStrings } from "@/lib/translate";
 
 // --- Course Icon Map ---
 const COURSE_ICON_MAP: Record<string, LucideIcon> = {
@@ -409,13 +412,108 @@ const COURSE_FEATURES: Record<string, string[]> = {
   ],
 };
 
+// Individual course card that auto-translates its own features list
+function CourseCard({ course }: { course: Course }) {
+  const { t, lang } = useLang();
+  const rawFeatures: string[] = COURSE_FEATURES[course.id] ?? [
+    course.description || "محتوى تعليمي متميز",
+    `المدة: ${course.duration || "حسب الجدول"}`,
+  ];
+
+  const [features, setFeatures] = useState<string[]>(rawFeatures);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (lang === "ar") {
+      setFeatures(rawFeatures);
+      return;
+    }
+    translateStrings(rawFeatures, lang).then((res) => {
+      if (!cancelled) setFeatures(res);
+    });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang, rawFeatures.join("|")]);
+
+  const parts = course.price.split(" / ");
+
+  return (
+    <div
+      className={`relative bg-white rounded-2xl flex flex-col transition-all duration-300 ${
+        course.is_featured
+          ? "border-2 border-primary shadow-2xl scale-105 z-10"
+          : "border border-gray-100 shadow-md"
+      }`}
+    >
+      {course.is_featured && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
+          <span className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow">
+            {t.courses.popular}
+          </span>
+        </div>
+      )}
+
+      <div className="p-8 flex flex-col flex-1">
+        <div className="flex justify-center mb-4 text-primary">
+          <CourseIcon icon={course.icon} courseId={course.id} className="w-12 h-12" />
+        </div>
+
+        <h3 className="text-xl font-bold text-center text-gray-900 mb-3">
+          {course.title}
+        </h3>
+
+        <div className="text-center mb-6">
+          <span className="text-3xl font-black text-primary">{parts[0]}</span>
+          <span className="text-gray-400 text-sm mr-1">
+            {parts[1] ? ` / ${parts[1]}` : ""}
+          </span>
+        </div>
+
+        <ul className="space-y-3 mb-8 flex-1">
+          {features.map((f, j) => (
+            <li key={j} className="flex items-center gap-2 text-sm text-gray-600">
+              <span className="text-primary font-bold text-base leading-none">✓</span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="#contact"
+          className={`block w-full text-center py-3 rounded-xl font-bold text-sm transition-all ${
+            course.is_featured
+              ? "bg-primary text-white hover:bg-primary/90 shadow-lg"
+              : "border-2 border-gray-300 text-gray-700 hover:border-primary hover:text-primary"
+          }`}
+        >
+          {t.courses.enroll}
+        </a>
+
+        <Link
+          href={`/courses/${course.id}`}
+          className="block text-center text-primary text-xs font-semibold mt-3 hover:underline"
+        >
+          {t.courses.learnMore}
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function CoursesGrid() {
   const [activeTab, setActiveTab] = useState("adults");
-  const { data: courses, isLoading } = useCourses();
-  const { t } = useLang();
+  const { data: rawCourses, isLoading } = useCourses();
+  const { t, lang } = useLang();
 
-  const adultsCourses = (courses ?? []).filter((c) => c.category === "adults");
-  const kidsCourses = (courses ?? []).filter((c) => c.category === "kids");
+  // Auto-translate course title + description
+  const allCourses = rawCourses ?? [];
+  const { data: courses, isTranslating: isTranslatingCourses } = useAutoTranslate(
+    allCourses,
+    ["title", "description"]
+  );
+
+  const adultsCourses = courses.filter((c) => c.category === "adults");
+  const kidsCourses = courses.filter((c) => c.category === "kids");
 
   const CATEGORY_TABS = [
     ...(adultsCourses.length > 0 ? [{ id: "adults", label: t.courses.adultsTab }] : []),
@@ -477,86 +575,27 @@ function CoursesGrid() {
         )}
 
         {!isLoading && (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start"
-            >
-              {currentCourses.map((course) => {
-                const features = COURSE_FEATURES[course.id] ?? [
-                  course.description || "محتوى تعليمي متميز",
-                  `المدة: ${course.duration || "حسب الجدول"}`,
-                ];
-                const parts = course.price.split(" / ");
-                return (
-                  <div
-                    key={course.id}
-                    className={`relative bg-white rounded-2xl flex flex-col transition-all duration-300 ${
-                      course.is_featured
-                        ? "border-2 border-primary shadow-2xl scale-105 z-10"
-                        : "border border-gray-100 shadow-md"
-                    }`}
-                  >
-                    {course.is_featured && (
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                        <span className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow">
-                          {t.courses.popular}
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="p-8 flex flex-col flex-1">
-                      <div className="flex justify-center mb-4 text-primary">
-                        <CourseIcon icon={course.icon} courseId={course.id} className="w-12 h-12" />
-                      </div>
-
-                      <h3 className="text-xl font-bold text-center text-gray-900 mb-3">
-                        {course.title}
-                      </h3>
-
-                      <div className="text-center mb-6">
-                        <span className="text-3xl font-black text-primary">{parts[0]}</span>
-                        <span className="text-gray-400 text-sm mr-1">
-                          {parts[1] ? ` / ${parts[1]}` : ""}
-                        </span>
-                      </div>
-
-                      <ul className="space-y-3 mb-8 flex-1">
-                        {features.map((f, j) => (
-                          <li key={j} className="flex items-center gap-2 text-sm text-gray-600">
-                            <span className="text-primary font-bold text-base leading-none">✓</span>
-                            <span>{f}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <a
-                        href="#contact"
-                        className={`block w-full text-center py-3 rounded-xl font-bold text-sm transition-all ${
-                          course.is_featured
-                            ? "bg-primary text-white hover:bg-primary/90 shadow-lg"
-                            : "border-2 border-gray-300 text-gray-700 hover:border-primary hover:text-primary"
-                        }`}
-                      >
-                        {t.courses.enroll}
-                      </a>
-
-                      <Link
-                        href={`/courses/${course.id}`}
-                        className="block text-center text-primary text-xs font-semibold mt-3 hover:underline"
-                      >
-                        {t.courses.learnMore}
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </motion.div>
-          </AnimatePresence>
+          <>
+            {isTranslatingCourses && lang !== "ar" && (
+              <p className="text-center text-sm text-muted-foreground mb-4 animate-pulse">
+                {lang === "fr" ? "Traduction en cours…" : lang === "es" ? "Traduciendo…" : lang === "de" ? "Wird übersetzt…" : "Translating…"}
+              </p>
+            )}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start"
+              >
+                {currentCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </>
         )}
       </div>
     </section>
@@ -617,8 +656,13 @@ function Testimonials() {
 
 function FAQ() {
   const { data, isLoadingContent: isLoading } = useSiteContent();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const faqItems = data?.faq ?? [];
+
+  const { data: translatedFaq, isTranslating } = useAutoTranslate(
+    faqItems,
+    ["question", "answer"]
+  );
 
   return (
     <section id="faq" className="py-20 bg-slate-50">
@@ -643,16 +687,23 @@ function FAQ() {
             ))}
           </div>
         ) : (
-          <Accordion type="single" collapsible className="w-full">
-            {faqItems.map((item) => (
-              <AccordionItem key={item.id} value={item.id} className="bg-white px-6 rounded-lg mb-4 border shadow-sm">
-                <AccordionTrigger className="text-lg font-semibold hover:text-primary py-4">{item.question}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-4">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <>
+            {isTranslating && lang !== "ar" && (
+              <p className="text-center text-sm text-muted-foreground mb-4 animate-pulse">
+                {lang === "fr" ? "Traduction en cours…" : lang === "es" ? "Traduciendo…" : lang === "de" ? "Wird übersetzt…" : "Translating…"}
+              </p>
+            )}
+            <Accordion type="single" collapsible className="w-full">
+              {translatedFaq.map((item) => (
+                <AccordionItem key={item.id} value={item.id} className="bg-white px-6 rounded-lg mb-4 border shadow-sm">
+                  <AccordionTrigger className="text-lg font-semibold hover:text-primary py-4 text-start">{item.question}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-4">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </>
         )}
       </div>
     </section>
