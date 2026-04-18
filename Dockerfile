@@ -1,4 +1,4 @@
-FROM node:22-alpine AS builder
+FROM node:22-slim AS builder
 
 RUN npm install -g pnpm@10
 
@@ -19,7 +19,7 @@ COPY . .
 RUN pnpm --filter @workspace/nour-academy run build
 RUN pnpm --filter @workspace/api-server run build
 
-FROM node:22-alpine AS runner
+FROM node:22-slim AS runner
 
 RUN npm install -g pnpm@10
 
