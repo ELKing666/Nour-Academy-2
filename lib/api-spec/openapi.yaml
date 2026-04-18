@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API specification for Nour Academy
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: students
+    description: Student registration operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,56 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /register:
+    post:
+      operationId: registerStudent
+      tags: [students]
+      summary: Register a new student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterStudentBody"
+      responses:
+        "201":
+          description: Student registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterStudentResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /students:
+    get:
+      operationId: listStudents
+      tags: [students]
+      summary: List all students
+      responses:
+        "200":
+          description: List of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+  /export:
+    get:
+      operationId: exportStudents
+      tags: [students]
+      summary: Export students as CSV
+      responses:
+        "200":
+          description: CSV file download
+          content:
+            text/csv:
+              schema:
+                type: string
 components:
   schemas:
     HealthStatus:
@@ -33,4 +85,63 @@ components:
           type: string
       required:
         - status
-
+    RegisterStudentBody:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        course:
+          type: string
+          enum: [bac, english, robotics]
+        payment_method:
+          type: string
+          enum: [cash, ccp]
+      required:
+        - name
+        - phone
+        - course
+        - payment_method
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        phone:
+          type: string
+        course:
+          type: string
+        payment_method:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
+      required:
+        - id
+        - name
+        - phone
+        - course
+        - payment_method
+        - status
+        - created_at
+    RegisterStudentResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        student:
+          $ref: "#/components/schemas/Student"
+      required:
+        - success
+        - student
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
