@@ -109,19 +109,19 @@ function Navbar() {
           />
           <span className="text-2xl font-bold font-sans">
             <span className="text-white">نور</span>{" "}
-            <span className="text-slate-300">أكاديمي</span>
+            <span className="text-gold">أكاديمي</span>
           </span>
         </a>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6 text-white font-medium">
-          <a href="#hero" className="hover:text-slate-300 transition-colors">الرئيسية</a>
-          <a href="#about" className="hover:text-slate-300 transition-colors">من نحن</a>
-          <a href="#courses" className="hover:text-slate-300 transition-colors">الدورات</a>
-          <a href="#testimonials" className="hover:text-slate-300 transition-colors">آراء الطلاب</a>
-          <a href="#faq" className="hover:text-slate-300 transition-colors">الأسئلة الشائعة</a>
-          <a href="#branches" className="hover:text-slate-300 transition-colors">فروعنا</a>
-          <Button asChild className="bg-slate-300 text-primary hover:bg-slate-400 font-bold">
+          <a href="#hero" className="hover:text-gold transition-colors">الرئيسية</a>
+          <a href="#about" className="hover:text-gold transition-colors">من نحن</a>
+          <a href="#courses" className="hover:text-gold transition-colors">الدورات</a>
+          <a href="#testimonials" className="hover:text-gold transition-colors">آراء الطلاب</a>
+          <a href="#faq" className="hover:text-gold transition-colors">الأسئلة الشائعة</a>
+          <a href="#branches" className="hover:text-gold transition-colors">فروعنا</a>
+          <Button asChild className="bg-gold text-primary hover:bg-gold-dark font-bold">
             <a href="#contact">تواصل معنا</a>
           </Button>
         </div>
@@ -146,7 +146,7 @@ function Navbar() {
           <a href="#branches" onClick={() => setMobileOpen(false)}>فروعنا</a>
           <Button
             asChild
-            className="bg-slate-300 text-primary hover:bg-slate-400 font-bold w-full mt-2"
+            className="bg-gold text-primary hover:bg-gold-dark font-bold w-full mt-2"
             onClick={() => setMobileOpen(false)}
           >
             <a href="#contact">تواصل معنا</a>
@@ -165,9 +165,9 @@ function Hero() {
     >
       <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-primary/80 to-primary pointer-events-none"></div>
-      <div className="absolute top-1/4 left-10 w-72 h-72 rounded-full bg-slate-300/20 blur-3xl pointer-events-none animate-pulse" />
+      <div className="absolute top-1/4 left-10 w-72 h-72 rounded-full bg-gold/20 blur-3xl pointer-events-none animate-pulse" />
       <div className="absolute bottom-1/3 right-10 w-96 h-96 rounded-full bg-white/5 blur-3xl pointer-events-none animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-slate-300/5 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gold/5 blur-3xl pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -176,7 +176,7 @@ function Hero() {
         className="container mx-auto px-4 relative z-10 text-center text-white flex-1 flex flex-col items-center justify-center"
       >
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
-          أنر درب نجاحك مع <span className="text-slate-300">نور أكاديمي</span>
+          أنر درب نجاحك مع <span className="text-gold">نور أكاديمي</span>
         </h1>
         <p className="text-lg md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed text-white/90">
           بيئة تعليمية حديثة، نخبة من خيرة الأساتذة، ومتابعة بيداغوجية دقيقة لضمان تفوق أبنائكم في مسارهم الدراسي.
@@ -184,7 +184,7 @@ function Hero() {
         <Button
           size="lg"
           asChild
-          className="bg-slate-300 text-primary hover:bg-slate-400 font-bold text-xl px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
+          className="bg-gold text-primary hover:bg-gold-dark font-bold text-xl px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
         >
           <a href="#contact">تواصل معنا</a>
         </Button>
@@ -217,8 +217,8 @@ function About() {
       target: 15,
       suffix: "+",
       label: "سنوات خبرة",
-      gradient: "from-slate-300 to-slate-500",
-      glow: "shadow-slate-300/40",
+      gradient: "from-gold to-gold-dark",
+      glow: "shadow-gold/40",
     },
     {
       icon: <Target className="w-7 h-7 text-white" />,
@@ -896,7 +896,7 @@ function Footer() {
           <div>
             <div className="text-2xl font-bold font-sans mb-4">
               <span className="text-white">نور</span>{" "}
-              <span className="text-slate-300">أكاديمي</span>
+              <span className="text-gold">أكاديمي</span>
             </div>
             <p className="text-white/80 max-w-sm">
               مؤسسة تعليمية رائدة تهدف إلى تقديم تعليم متميز وبناء جيل ناجح علمياً وأخلاقياً.
@@ -904,7 +904,7 @@ function Footer() {
           </div>
           
           <div>
-            <h3 className="text-xl font-bold mb-6 text-slate-300">روابط سريعة</h3>
+            <h3 className="text-xl font-bold mb-6 text-gold">روابط سريعة</h3>
             <ul className="space-y-3">
               <li><a href="#hero" className="text-white/80 hover:text-white transition-colors">الرئيسية</a></li>
               <li><a href="#about" className="text-white/80 hover:text-white transition-colors">من نحن</a></li>
@@ -914,11 +914,11 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-6 text-slate-300">اتصل بنا</h3>
+            <h3 className="text-xl font-bold mb-6 text-gold">اتصل بنا</h3>
             <ul className="space-y-3 text-white/80">
-              <li className="flex items-center gap-2"><MapPin size={18} className="text-slate-300" /> {contact?.address ?? "شلف، الجزائر"}</li>
-              <li className="flex items-start gap-2"><Phone size={18} className="text-slate-300 mt-1 shrink-0" /> <span dir="ltr" className="whitespace-pre-line">{contact?.phone ?? "0770 764 200\n0770 767 750\n0550 686 498"}</span></li>
-              <li className="flex items-center gap-2"><Mail size={18} className="text-slate-300" /> {contact?.email ?? "contact@nour-academy.dz"}</li>
+              <li className="flex items-center gap-2"><MapPin size={18} className="text-gold" /> {contact?.address ?? "شلف، الجزائر"}</li>
+              <li className="flex items-start gap-2"><Phone size={18} className="text-gold mt-1 shrink-0" /> <span dir="ltr" className="whitespace-pre-line">{contact?.phone ?? "0770 764 200\n0770 767 750\n0550 686 498"}</span></li>
+              <li className="flex items-center gap-2"><Mail size={18} className="text-gold" /> {contact?.email ?? "contact@nour-academy.dz"}</li>
             </ul>
           </div>
         </div>

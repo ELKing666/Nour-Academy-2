@@ -54,7 +54,7 @@ function LoginScreen({ onLogin }: { onLogin: (pw: string) => void }) {
         <CardHeader className="text-center">
           <div className="text-3xl font-bold mb-1">
             <span className="text-[#c0001a]">نور</span>{" "}
-            <span className="text-slate-400">أكاديمي</span>
+            <span className="text-gold-dark">أكاديمي</span>
           </div>
           <CardTitle className="text-lg text-gray-700">لوحة التحكم</CardTitle>
         </CardHeader>
@@ -750,7 +750,7 @@ function CoursesTab({ password }: { password: string }) {
             <p className="font-semibold text-gray-900 truncate">
               {course.title}
               {course.is_featured && (
-                <span className="mr-2 text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                <span className="mr-2 text-xs bg-gold-faint text-gold-dark px-2 py-0.5 rounded-full">
                   الأكثر طلباً
                 </span>
               )}
@@ -932,7 +932,7 @@ function AdminPanel({ password, onLogout }: { password: string; onLogout: () => 
         <div className="flex items-center gap-3">
           <div className="text-xl font-bold">
             <span>نور</span>{" "}
-            <span className="text-slate-200">أكاديمي</span>
+            <span className="text-gold-light">أكاديمي</span>
           </div>
           <span className="text-white/60 text-sm">— لوحة التحكم</span>
         </div>
