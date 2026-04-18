@@ -61,6 +61,57 @@ To use a custom domain, go to your service **Settings → Domains → Add Custom
 | `LOG_LEVEL` | Optional. Logging level: `info`, `debug`, `warn` (default: `info`) |
 | `GOOGLE_SCRIPT_URL` | Optional. Google Apps Script URL for student registration form |
 
+## Migrating existing content from Replit to Railway
+
+After the first deploy your Railway database is populated with the built-in seed data, but any content you added through the admin panel (extra courses, FAQ items, contact info changes) lives only in the Replit database. Follow these steps to move it across.
+
+### Step 1 — Export from the Replit database
+
+Run the export script from your Replit shell, pointing it at your Replit `DATABASE_URL`:
+
+```bash
+DATABASE_URL="<your-replit-DATABASE_URL>" pnpm --filter @workspace/scripts export-data
+```
+
+This creates **`data-export.json`** in the project root containing every row from the `courses`, `faq_items`, `contact_info`, and `contact_messages` tables.
+
+> **Where to find your Replit DATABASE_URL:** open the **Secrets** panel in Replit (the padlock icon) and copy the `DATABASE_URL` value.
+
+### Step 2 — Import into the Railway database
+
+Get your Railway database connection string from the Railway dashboard:
+
+1. Open your Railway project → click the **PostgreSQL** service
+2. Go to **Connect** → copy the **Database URL** (`postgresql://…`)
+
+Then run the import script, pointing it at the Railway URL:
+
+```bash
+DATABASE_URL="<your-railway-DATABASE_URL>" pnpm --filter @workspace/scripts import-data
+```
+
+The script uses `ON CONFLICT … DO UPDATE` / `DO NOTHING` so it is safe to run multiple times — it will never create duplicates.
+
+> **Note:** Make sure your Railway service has started at least once before importing. The first startup applies the Drizzle migrations that create all the tables.
+
+### Optional: skip contact messages
+
+If you don't want to copy over visitor enquiries, set `SKIP_CONTACT_MESSAGES=true`:
+
+```bash
+DATABASE_URL="<railway-url>" SKIP_CONTACT_MESSAGES=true pnpm --filter @workspace/scripts import-data
+```
+
+### Step 3 — Verify
+
+Open your deployed Railway URL, go to `/admin`, and confirm that your custom content (courses, FAQ items, contact details) appears correctly.
+
+### Security note
+
+`data-export.json` may contain visitor messages with personal information (names and phone numbers). Delete it from your project directory once the migration is complete and **do not commit it to your repository** (it is already listed in `.gitignore`).
+
+---
+
 ## Updating the site
 
 Push to your GitHub repository's default branch — Railway automatically rebuilds and redeploys.
