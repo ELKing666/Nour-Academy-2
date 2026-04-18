@@ -28,9 +28,10 @@ app.use(
     },
   }),
 );
+const allowedOrigin = process.env.CORS_ORIGIN ?? (process.env.NODE_ENV === "production" ? false : true);
 app.use(
   cors({
-    origin: true,
+    origin: allowedOrigin,
     credentials: true,
   }),
 );

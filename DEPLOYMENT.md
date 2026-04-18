@@ -56,7 +56,8 @@ To use a custom domain, go to your service **Settings → Domains → Add Custom
 | `DATABASE_URL` | PostgreSQL connection string (auto-set by Railway PostgreSQL plugin) |
 | `NODE_ENV` | Set to `production` |
 | `ADMIN_PASSWORD` | Password for the `/admin` panel |
-| `PORT` | HTTP port (auto-set by Railway, defaults to 3000) |
+| `PORT` | HTTP port (auto-set by Railway at runtime — **do not set manually**) |
+| `CORS_ORIGIN` | Optional. Set to your domain (e.g. `https://yourdomain.com`) if you call the API from a different origin. In production without this set, only same-origin requests are accepted. |
 | `LOG_LEVEL` | Optional. Logging level: `info`, `debug`, `warn` (default: `info`) |
 | `GOOGLE_SCRIPT_URL` | Optional. Google Apps Script URL for student registration form |
 
