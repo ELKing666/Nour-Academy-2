@@ -130,10 +130,10 @@ function LanguageDropdown() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 text-white hover:text-gold transition-colors font-medium text-sm px-2 py-1 rounded-lg hover:bg-white/10"
+        className="flex items-center gap-1.5 text-white hover:text-gold transition-colors font-medium text-sm px-2 py-1.5 rounded-lg hover:bg-white/10"
         aria-label="Select language"
       >
-        <Globe size={16} />
+        <span className="text-base leading-none">{current.flag}</span>
         <span>{current.label}</span>
         <ChevronDown size={13} className={`transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
@@ -145,17 +145,18 @@ function LanguageDropdown() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.96 }}
             transition={{ duration: 0.15 }}
-            className="absolute top-full mt-2 end-0 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 min-w-[140px] z-50"
+            className="absolute top-full mt-2 end-0 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 min-w-[155px] z-50"
           >
             {LANGUAGES.map((l) => (
               <button
                 key={l.code}
                 onClick={() => { setLang(l.code); setOpen(false); }}
-                className={`w-full text-start px-4 py-2 text-sm transition-colors hover:bg-gray-50 ${
-                  l.code === lang ? "text-primary font-bold" : "text-gray-700"
+                className={`w-full text-start px-4 py-2.5 text-sm transition-colors hover:bg-gray-50 flex items-center gap-2.5 ${
+                  l.code === lang ? "text-primary font-bold bg-red-50/60" : "text-gray-700"
                 }`}
               >
-                {l.label}
+                <span className="text-lg leading-none">{l.flag}</span>
+                <span>{l.label}</span>
               </button>
             ))}
           </motion.div>
@@ -190,13 +191,13 @@ function Navbar() {
         <a href="#hero" className="flex items-center gap-3">
           <img
             src={`${import.meta.env.BASE_URL}logo.png`}
-            alt="نور أكاديمي"
+            alt="Nour Academy"
             className="h-14 w-14 object-cover shrink-0"
             style={{ mixBlendMode: "screen" }}
           />
           <span className="text-2xl font-bold font-sans">
-            <span className="text-white">نور</span>{" "}
-            <span className="text-gold">أكاديمي</span>
+            <span className="text-white">{t.brandFirst}</span>{" "}
+            <span className="text-gold">{t.brandSecond}</span>
           </span>
         </a>
 
@@ -248,13 +249,14 @@ function Navbar() {
                 <button
                   key={l.code}
                   onClick={() => { setLang(l.code); setMobileOpen(false); }}
-                  className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
                     l.code === lang
                       ? "bg-gold text-primary"
                       : "bg-white/15 text-white hover:bg-white/25"
                   }`}
                 >
-                  {l.label}
+                  <span className="text-base leading-none">{l.flag}</span>
+                  <span>{l.label}</span>
                 </button>
               ))}
             </div>
@@ -1000,8 +1002,8 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div>
             <div className="text-2xl font-bold font-sans mb-4">
-              <span className="text-white">نور</span>{" "}
-              <span className="text-gold">أكاديمي</span>
+              <span className="text-white">{t.brandFirst}</span>{" "}
+              <span className="text-gold">{t.brandSecond}</span>
             </div>
             <p className="text-white/80 max-w-sm">{t.footer.tagline}</p>
           </div>

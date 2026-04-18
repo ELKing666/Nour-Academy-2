@@ -1,16 +1,18 @@
 export type Lang = "ar" | "en" | "fr" | "es" | "de";
 
-export const LANGUAGES: { code: Lang; label: string; dir: "rtl" | "ltr" }[] = [
-  { code: "ar", label: "العربية", dir: "rtl" },
-  { code: "en", label: "English", dir: "ltr" },
-  { code: "fr", label: "Français", dir: "ltr" },
-  { code: "es", label: "Español", dir: "ltr" },
-  { code: "de", label: "Deutsch", dir: "ltr" },
+export const LANGUAGES: { code: Lang; label: string; flag: string; dir: "rtl" | "ltr" }[] = [
+  { code: "ar", label: "العربية", flag: "🇩🇿", dir: "rtl" },
+  { code: "en", label: "English",  flag: "🇬🇧", dir: "ltr" },
+  { code: "fr", label: "Français", flag: "🇫🇷", dir: "ltr" },
+  { code: "es", label: "Español",  flag: "🇪🇸", dir: "ltr" },
+  { code: "de", label: "Deutsch",  flag: "🇩🇪", dir: "ltr" },
 ];
 
 export const translations = {
   ar: {
     dir: "rtl" as const,
+    brandFirst: "نور",
+    brandSecond: "أكاديمي",
     nav: {
       home: "الرئيسية",
       about: "من نحن",
@@ -92,6 +94,8 @@ export const translations = {
 
   en: {
     dir: "ltr" as const,
+    brandFirst: "Nour",
+    brandSecond: "Academy",
     nav: {
       home: "Home",
       about: "About Us",
@@ -173,6 +177,8 @@ export const translations = {
 
   fr: {
     dir: "ltr" as const,
+    brandFirst: "Nour",
+    brandSecond: "Académie",
     nav: {
       home: "Accueil",
       about: "À propos",
@@ -254,6 +260,8 @@ export const translations = {
 
   es: {
     dir: "ltr" as const,
+    brandFirst: "Nour",
+    brandSecond: "Academia",
     nav: {
       home: "Inicio",
       about: "Sobre Nosotros",
@@ -335,6 +343,8 @@ export const translations = {
 
   de: {
     dir: "ltr" as const,
+    brandFirst: "Nour",
+    brandSecond: "Akademie",
     nav: {
       home: "Startseite",
       about: "Über uns",
