@@ -6,10 +6,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-gold: #F5F0E8;
-  --color-gold-dark: #E8E0CC;
-  --color-gold-light: #FAF7F2;
-  --color-gold-faint: #FDFBF8;
+  --color-gold: #4A4A4A;
+  --color-gold-dark: #333333;
+  --color-gold-light: #666666;
+  --color-gold-faint: #F2F2F2;
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-border: hsl(var(--border));
