@@ -15,6 +15,21 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  BookOpen,
+  Globe,
+  Languages,
+  Bot,
+  Cpu,
+  FlaskConical,
+  Calculator,
+  Code,
+  Music,
+  Palette,
+  Microscope,
+  Pencil,
+  Lightbulb,
+  Star,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,6 +52,21 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSiteContent } from "@/hooks/use-site-content";
 import { useCourses } from "@/hooks/use-courses";
+
+// --- Course Icon Map ---
+const COURSE_ICON_MAP: Record<string, LucideIcon> = {
+  GraduationCap, BookOpen, Globe, Languages, Bot, Cpu,
+  FlaskConical, Calculator, Code, Music, Palette, Microscope, Pencil, Lightbulb, Star,
+  // emoji fallbacks
+  "📚": BookOpen, "🌍": Globe, "🇫🇷": Languages, "🤖": Bot,
+  // id fallbacks
+  bac: GraduationCap, english: Globe, french: Languages, robotics: Bot,
+};
+
+function CourseIcon({ icon, courseId, className = "w-12 h-12" }: { icon?: string; courseId?: string; className?: string }) {
+  const Icon = (icon && COURSE_ICON_MAP[icon]) || (courseId && COURSE_ICON_MAP[courseId]) || BookOpen;
+  return <Icon className={className} />;
+}
 
 // --- Animation variants ---
 const fadeUp = {
@@ -401,7 +431,9 @@ function CoursesGrid() {
 
                     <div className="p-8 flex flex-col flex-1">
                       {/* Icon */}
-                      <div className="text-5xl text-center mb-4">{course.icon}</div>
+                      <div className="flex justify-center mb-4 text-primary">
+                        <CourseIcon icon={course.icon} courseId={course.id} className="w-12 h-12" />
+                      </div>
 
                       {/* Title */}
                       <h3 className="text-xl font-bold text-center text-gray-900 mb-3">

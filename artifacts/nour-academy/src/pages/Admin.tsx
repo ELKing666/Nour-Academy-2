@@ -12,6 +12,42 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import {
+  GraduationCap, BookOpen, Globe, Languages, Bot, Cpu,
+  FlaskConical, Calculator, Code, Music, Palette, Microscope, Pencil, Lightbulb, Star,
+  type LucideIcon,
+} from "lucide-react";
+
+// --- Course Icon Map ---
+const COURSE_ICON_MAP: Record<string, LucideIcon> = {
+  GraduationCap, BookOpen, Globe, Languages, Bot, Cpu,
+  FlaskConical, Calculator, Code, Music, Palette, Microscope, Pencil, Lightbulb, Star,
+  "📚": BookOpen, "🌍": Globe, "🇫🇷": Languages, "🤖": Bot,
+  bac: GraduationCap, english: Globe, french: Languages, robotics: Bot,
+};
+
+const ICON_OPTIONS: { key: string; label: string; Icon: LucideIcon }[] = [
+  { key: "GraduationCap", label: "تخرج",     Icon: GraduationCap },
+  { key: "BookOpen",      label: "كتاب",      Icon: BookOpen },
+  { key: "Globe",         label: "عالم",      Icon: Globe },
+  { key: "Languages",     label: "لغات",      Icon: Languages },
+  { key: "Bot",           label: "روبوت",     Icon: Bot },
+  { key: "Cpu",           label: "تقنية",     Icon: Cpu },
+  { key: "FlaskConical",  label: "علوم",      Icon: FlaskConical },
+  { key: "Calculator",    label: "رياضيات",   Icon: Calculator },
+  { key: "Code",          label: "برمجة",     Icon: Code },
+  { key: "Music",         label: "موسيقى",    Icon: Music },
+  { key: "Palette",       label: "فنون",      Icon: Palette },
+  { key: "Microscope",    label: "أبحاث",     Icon: Microscope },
+  { key: "Pencil",        label: "كتابة",     Icon: Pencil },
+  { key: "Lightbulb",     label: "أفكار",     Icon: Lightbulb },
+  { key: "Star",          label: "مميز",      Icon: Star },
+];
+
+function CourseIcon({ icon, courseId, className = "w-6 h-6" }: { icon?: string; courseId?: string; className?: string }) {
+  const Icon = (icon && COURSE_ICON_MAP[icon]) || (courseId && COURSE_ICON_MAP[courseId]) || BookOpen;
+  return <Icon className={className} />;
+}
 
 const SESSION_KEY = "admin_password";
 
@@ -393,7 +429,7 @@ const EMPTY_COURSE: CourseInput = {
   price: "",
   duration: "",
   image_url: "",
-  icon: "📚",
+  icon: "BookOpen",
   category: "adults",
   is_featured: false,
   sort_order: 0,
@@ -546,8 +582,25 @@ function CourseFormModal({
                 <Input value={form.duration} onChange={(e) => field("duration", e.target.value)} placeholder="4 ساعة/أسبوع" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">الرمز (Emoji)</label>
-                <Input value={form.icon} onChange={(e) => field("icon", e.target.value)} placeholder="📚" className="text-xl" />
+                <label className="block text-xs font-medium text-gray-600 mb-2">الأيقونة</label>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {ICON_OPTIONS.map(({ key, label, Icon }) => (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => field("icon", key)}
+                      title={label}
+                      className={`flex flex-col items-center gap-0.5 p-2 rounded-lg border text-xs transition-all ${
+                        form.icon === key
+                          ? "border-[#c0001a] bg-red-50 text-[#c0001a]"
+                          : "border-gray-200 hover:border-gray-400 text-gray-600"
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="truncate w-full text-center" style={{ fontSize: "10px" }}>{label}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">الفئة</label>
@@ -745,7 +798,9 @@ function CoursesTab({ password }: { password: string }) {
     return (
       <div className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0 gap-2">
         <div className="flex items-center gap-3 min-w-0">
-          <span className="text-2xl flex-shrink-0">{course.icon}</span>
+          <span className="flex-shrink-0 text-[#c0001a]">
+            <CourseIcon icon={course.icon} courseId={course.id} className="w-7 h-7" />
+          </span>
           <div className="min-w-0">
             <p className="font-semibold text-gray-900 truncate">
               {course.title}
