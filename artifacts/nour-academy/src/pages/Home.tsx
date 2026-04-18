@@ -571,11 +571,6 @@ function Branches() {
       address: "Hay Arroudj, Centre des Affaires Erriadh N°02, Chlef",
       maps: "https://maps.app.goo.gl/PqruSFBzrdkExpy89",
     },
-    {
-      name: "الفرع الثالث",
-      address: "Noor Academy 3, Chlef",
-      maps: "https://maps.app.goo.gl/EP9VnsNjWvQEzT9ZA",
-    },
   ];
 
   return (
@@ -590,11 +585,11 @@ function Branches() {
         >
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">فروعنا</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            نور أكاديمي تضم ثلاثة فروع في مدينة شلف، الجزائر، كل فرع ملتزم بتقديم تعليم ذي جودة عالية.
+            نور أكاديمي تضم عدة فروع في مدينة شلف، الجزائر، كل فرع ملتزم بتقديم تعليم ذي جودة عالية.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {branches.map((branch, i) => (
             <motion.div
               key={i}
