@@ -1105,8 +1105,19 @@ function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/20 pt-8 text-center text-white/60 text-sm">
-          {t.footer.copyright}
+        <div className="border-t border-white/20 pt-8 text-center text-white/60 text-sm space-y-1">
+          <div>{t.footer.copyright}</div>
+          <div>
+            Developed by{" "}
+            <a
+              href="http://navidz.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold hover:text-gold-light transition-colors"
+            >
+              navidz.com
+            </a>
+          </div>
         </div>
       </div>
     </footer>
