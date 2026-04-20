@@ -94,7 +94,7 @@ export const translations = {
 
   en: {
     dir: "ltr" as const,
-    brandFirst: "Nour",
+    brandFirst: "Noor",
     brandSecond: "Academy",
     nav: {
       home: "Home",
@@ -107,14 +107,14 @@ export const translations = {
     },
     hero: {
       title: "Light Your Path to Success with",
-      brand: "Nour Academy",
+      brand: "Noor Academy",
       subtitle:
         "A modern educational environment, elite teachers, and precise pedagogical follow-up to ensure your children's academic success.",
       cta: "Contact Us",
     },
     about: {
       title: "About Us",
-      desc: "Nour Academy is a leading educational institution in Algeria, aiming to build an academically and morally excellent generation through a stimulating environment and modern teaching methods.",
+      desc: "Noor Academy is a leading educational institution in Algeria, aiming to build an academically and morally excellent generation through a stimulating environment and modern teaching methods.",
       stat1: "Students",
       stat2: "Expert Trainers",
       stat3: "Years of Experience",
@@ -139,7 +139,7 @@ export const translations = {
     },
     branches: {
       title: "Our Branches",
-      desc: "Nour Academy has several branches in Chlef, Algeria, each committed to providing high-quality education.",
+      desc: "Noor Academy has several branches in Chlef, Algeria, each committed to providing high-quality education.",
       branch1: "Main Branch",
       branch2: "Second Branch",
       mapsBtn: "View on Google Maps",
@@ -171,13 +171,13 @@ export const translations = {
       quickLinks: "Quick Links",
       ourCourses: "Our Courses",
       contactCol: "Contact",
-      copyright: "© 2026 Nour Academy — All Rights Reserved",
+      copyright: "© 2026 Noor Academy — All Rights Reserved",
     },
   },
 
   fr: {
     dir: "ltr" as const,
-    brandFirst: "Nour",
+    brandFirst: "Noor",
     brandSecond: "Académie",
     nav: {
       home: "Accueil",
@@ -190,14 +190,14 @@ export const translations = {
     },
     hero: {
       title: "Éclairez votre chemin vers le succès avec",
-      brand: "Nour Academy",
+      brand: "Noor Academy",
       subtitle:
         "Un environnement éducatif moderne, des enseignants d'élite et un suivi pédagogique précis pour garantir la réussite scolaire de vos enfants.",
       cta: "Nous Contacter",
     },
     about: {
       title: "À propos de nous",
-      desc: "Nour Academy est un établissement éducatif de premier plan en Algérie, visant à former une génération excellente sur le plan académique et moral grâce à un environnement stimulant et des méthodes d'enseignement modernes.",
+      desc: "Noor Academy est un établissement éducatif de premier plan en Algérie, visant à former une génération excellente sur le plan académique et moral grâce à un environnement stimulant et des méthodes d'enseignement modernes.",
       stat1: "Étudiants",
       stat2: "Formateurs Experts",
       stat3: "Années d'Expérience",
@@ -222,7 +222,7 @@ export const translations = {
     },
     branches: {
       title: "Nos Agences",
-      desc: "Nour Academy possède plusieurs agences à Chlef, Algérie, chacune engagée à fournir un enseignement de haute qualité.",
+      desc: "Noor Academy possède plusieurs agences à Chlef, Algérie, chacune engagée à fournir un enseignement de haute qualité.",
       branch1: "Agence Principale",
       branch2: "Deuxième Agence",
       mapsBtn: "Voir sur Google Maps",
@@ -254,13 +254,13 @@ export const translations = {
       quickLinks: "Liens Rapides",
       ourCourses: "Nos Cours",
       contactCol: "Contact",
-      copyright: "© 2026 Nour Academy — Tous droits réservés",
+      copyright: "© 2026 Noor Academy — Tous droits réservés",
     },
   },
 
   es: {
     dir: "ltr" as const,
-    brandFirst: "Nour",
+    brandFirst: "Noor",
     brandSecond: "Academia",
     nav: {
       home: "Inicio",
@@ -273,14 +273,14 @@ export const translations = {
     },
     hero: {
       title: "Ilumina tu camino al éxito con",
-      brand: "Nour Academy",
+      brand: "Noor Academy",
       subtitle:
         "Un entorno educativo moderno, profesores de élite y un seguimiento pedagógico preciso para garantizar el éxito académico de sus hijos.",
       cta: "Contáctenos",
     },
     about: {
       title: "Sobre Nosotros",
-      desc: "Nour Academy es una institución educativa líder en Argelia, con el objetivo de formar una generación excelente académica y moralmente a través de un entorno estimulante y métodos de enseñanza modernos.",
+      desc: "Noor Academy es una institución educativa líder en Argelia, con el objetivo de formar una generación excelente académica y moralmente a través de un entorno estimulante y métodos de enseñanza modernos.",
       stat1: "Estudiantes",
       stat2: "Formadores Expertos",
       stat3: "Años de Experiencia",
@@ -305,7 +305,7 @@ export const translations = {
     },
     branches: {
       title: "Nuestras Sucursales",
-      desc: "Nour Academy tiene varias sucursales en Chlef, Argelia, cada una comprometida con brindar educación de alta calidad.",
+      desc: "Noor Academy tiene varias sucursales en Chlef, Argelia, cada una comprometida con brindar educación de alta calidad.",
       branch1: "Sucursal Principal",
       branch2: "Segunda Sucursal",
       mapsBtn: "Ver en Google Maps",
@@ -337,13 +337,13 @@ export const translations = {
       quickLinks: "Enlaces Rápidos",
       ourCourses: "Nuestros Cursos",
       contactCol: "Contacto",
-      copyright: "© 2026 Nour Academy — Todos los derechos reservados",
+      copyright: "© 2026 Noor Academy — Todos los derechos reservados",
     },
   },
 
   de: {
     dir: "ltr" as const,
-    brandFirst: "Nour",
+    brandFirst: "Noor",
     brandSecond: "Akademie",
     nav: {
       home: "Startseite",
@@ -356,14 +356,14 @@ export const translations = {
     },
     hero: {
       title: "Erhellen Sie Ihren Weg zum Erfolg mit",
-      brand: "Nour Academy",
+      brand: "Noor Academy",
       subtitle:
         "Eine moderne Lernumgebung, Elitelehrer und präzise pädagogische Betreuung, um den schulischen Erfolg Ihrer Kinder zu gewährleisten.",
       cta: "Kontakt aufnehmen",
     },
     about: {
       title: "Über uns",
-      desc: "Nour Academy ist eine führende Bildungseinrichtung in Algerien, die darauf abzielt, eine akademisch und moralisch hervorragende Generation durch eine stimulierende Umgebung und moderne Lehrmethoden aufzubauen.",
+      desc: "Noor Academy ist eine führende Bildungseinrichtung in Algerien, die darauf abzielt, eine akademisch und moralisch hervorragende Generation durch eine stimulierende Umgebung und moderne Lehrmethoden aufzubauen.",
       stat1: "Schüler",
       stat2: "Experten-Trainer",
       stat3: "Jahre Erfahrung",
@@ -388,7 +388,7 @@ export const translations = {
     },
     branches: {
       title: "Unsere Standorte",
-      desc: "Nour Academy hat mehrere Standorte in Chlef, Algerien, jeder verpflichtet, qualitativ hochwertige Bildung anzubieten.",
+      desc: "Noor Academy hat mehrere Standorte in Chlef, Algerien, jeder verpflichtet, qualitativ hochwertige Bildung anzubieten.",
       branch1: "Hauptstandort",
       branch2: "Zweiter Standort",
       mapsBtn: "Auf Google Maps ansehen",
@@ -420,7 +420,7 @@ export const translations = {
       quickLinks: "Schnelllinks",
       ourCourses: "Unsere Kurse",
       contactCol: "Kontakt",
-      copyright: "© 2026 Nour Academy — Alle Rechte vorbehalten",
+      copyright: "© 2026 Noor Academy — Alle Rechte vorbehalten",
     },
   },
 } as const;

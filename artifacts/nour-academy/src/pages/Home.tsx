@@ -235,7 +235,7 @@ function Navbar() {
         <a href="#hero" className="flex items-center gap-3">
           <img
             src={`${import.meta.env.BASE_URL}logo.png`}
-            alt="Nour Academy"
+            alt="Noor Academy"
             className="h-14 w-14 object-cover shrink-0 rounded-full"
             style={{ mixBlendMode: "screen" }}
           />
