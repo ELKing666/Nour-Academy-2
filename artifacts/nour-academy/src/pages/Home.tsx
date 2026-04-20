@@ -204,7 +204,7 @@ function Navbar() {
           <img
             src={`${import.meta.env.BASE_URL}logo.png`}
             alt="Nour Academy"
-            className="h-14 w-14 object-cover shrink-0"
+            className="h-14 w-14 object-cover shrink-0 rounded-full"
             style={{ mixBlendMode: "screen" }}
           />
           <span className="text-2xl font-bold font-sans">

@@ -361,9 +361,13 @@ function MessagesTab({ password }: { password: string }) {
   const [messages, setMessages] = React.useState<ContactMessage[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState("");
+  const [deletingId, setDeletingId] = React.useState<number | null>(null);
+  const [confirmId, setConfirmId] = React.useState<number | null>(null);
+  const { toast } = useToast();
+
+  const base = import.meta.env.BASE_URL?.replace(/\/$/, "") ?? "";
 
   React.useEffect(() => {
-    const base = import.meta.env.BASE_URL?.replace(/\/$/, "") ?? "";
     fetch(`${base}/api/admin/messages`, {
       headers: { Authorization: `Bearer ${password}` },
     })
@@ -374,7 +378,25 @@ function MessagesTab({ password }: { password: string }) {
       .then((data) => setMessages(data as ContactMessage[]))
       .catch((e) => setError(e.message))
       .finally(() => setIsLoading(false));
-  }, [password]);
+  }, [password, base]);
+
+  async function handleDelete(id: number) {
+    setDeletingId(id);
+    try {
+      const res = await fetch(`${base}/api/admin/messages/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${password}` },
+      });
+      if (!res.ok) throw new Error("فشل الحذف");
+      setMessages((prev) => prev.filter((m) => m.id !== id));
+      toast({ title: "تم حذف الرسالة" });
+    } catch {
+      toast({ title: "فشل حذف الرسالة", variant: "destructive" });
+    } finally {
+      setDeletingId(null);
+      setConfirmId(null);
+    }
+  }
 
   if (isLoading) {
     return <p className="text-gray-400 text-center py-8">جارٍ التحميل...</p>;
@@ -400,17 +422,43 @@ function MessagesTab({ password }: { password: string }) {
             <div className="flex items-start justify-between gap-2">
               <div>
                 <p className="font-semibold text-gray-900">{msg.name}</p>
-                <p className="text-sm text-gray-500 dir-ltr" dir="ltr">{msg.phone}</p>
+                <p className="text-sm text-gray-500" dir="ltr">{msg.phone}</p>
               </div>
-              <span className="text-xs text-gray-400 flex-shrink-0 mt-1">
-                {new Date(msg.created_at).toLocaleDateString("ar-DZ", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
+              <div className="flex items-center gap-2 flex-shrink-0 mt-1">
+                <span className="text-xs text-gray-400">
+                  {new Date(msg.created_at).toLocaleDateString("ar-DZ", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+                {confirmId === msg.id ? (
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => handleDelete(msg.id)}
+                      disabled={deletingId === msg.id}
+                      className="text-xs bg-red-600 text-white px-2 py-0.5 rounded-md hover:bg-red-700 disabled:opacity-50"
+                    >
+                      {deletingId === msg.id ? "..." : "تأكيد"}
+                    </button>
+                    <button
+                      onClick={() => setConfirmId(null)}
+                      className="text-xs text-gray-500 hover:text-gray-700 px-1"
+                    >
+                      إلغاء
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setConfirmId(msg.id)}
+                    className="text-xs text-red-400 hover:text-red-600 font-medium"
+                  >
+                    حذف
+                  </button>
+                )}
+              </div>
             </div>
             <p className="text-gray-700 text-sm bg-gray-50 rounded-lg px-3 py-2 leading-relaxed">
               {msg.message}

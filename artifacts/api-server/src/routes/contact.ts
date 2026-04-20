@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { db, contactMessagesTable } from "@workspace/db";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 const router = Router();
 
@@ -69,6 +69,26 @@ router.get("/admin/messages", requireAdmin, async (_req, res) => {
       created_at: m.created_at.toISOString(),
     })),
   );
+});
+
+router.delete("/admin/messages/:id", requireAdmin, async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    res.status(400).json({ error: "معرّف غير صحيح" });
+    return;
+  }
+
+  const deleted = await db
+    .delete(contactMessagesTable)
+    .where(eq(contactMessagesTable.id, id))
+    .returning();
+
+  if (deleted.length === 0) {
+    res.status(404).json({ error: "الرسالة غير موجودة" });
+    return;
+  }
+
+  res.json({ success: true });
 });
 
 export { router as contactRouter };
