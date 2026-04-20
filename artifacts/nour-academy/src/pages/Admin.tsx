@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import {
   GraduationCap, BookOpen, Globe, Languages, Bot, Cpu,
   FlaskConical, Calculator, Code, Music, Palette, Microscope, Pencil, Lightbulb, Star,
+  Library, BookMarked, Brain, Atom, Trophy, Award, Scroll, Rocket, Dna, Sigma,
   type LucideIcon,
 } from "lucide-react";
 
@@ -22,29 +23,67 @@ import {
 const COURSE_ICON_MAP: Record<string, LucideIcon> = {
   GraduationCap, BookOpen, Globe, Languages, Bot, Cpu,
   FlaskConical, Calculator, Code, Music, Palette, Microscope, Pencil, Lightbulb, Star,
+  Library, BookMarked, Brain, Atom, Trophy, Award, Scroll, Rocket, Dna, Sigma,
   "📚": BookOpen, "🌍": Globe, "🇫🇷": Languages, "🤖": Bot,
   bac: GraduationCap, english: Globe, french: Languages, robotics: Bot,
 };
 
-const ICON_OPTIONS: { key: string; label: string; Icon: LucideIcon }[] = [
+const LANG_BADGES: Record<string, { bg: string; text: string }> = {
+  "lang:EN": { bg: "#1d4ed8", text: "EN" },
+  "lang:FR": { bg: "#1e3a5f", text: "FR" },
+  "lang:ES": { bg: "#c0001a", text: "ES" },
+  "lang:DE": { bg: "#374151", text: "DE" },
+  "lang:AR": { bg: "#065f46", text: "AR" },
+};
+
+const ICON_OPTIONS: { key: string; label: string; Icon?: LucideIcon; badge?: { bg: string; text: string } }[] = [
   { key: "GraduationCap", label: "تخرج",     Icon: GraduationCap },
   { key: "BookOpen",      label: "كتاب",      Icon: BookOpen },
+  { key: "Library",       label: "مكتبة",     Icon: Library },
+  { key: "BookMarked",    label: "مرجع",      Icon: BookMarked },
+  { key: "Scroll",        label: "تاريخ",     Icon: Scroll },
+  { key: "Brain",         label: "ذكاء",      Icon: Brain },
+  { key: "Atom",          label: "فيزياء",    Icon: Atom },
+  { key: "Dna",           label: "أحياء",     Icon: Dna },
+  { key: "FlaskConical",  label: "كيمياء",    Icon: FlaskConical },
+  { key: "Microscope",    label: "أبحاث",     Icon: Microscope },
+  { key: "Calculator",    label: "رياضيات",   Icon: Calculator },
+  { key: "Sigma",         label: "إحصاء",     Icon: Sigma },
+  { key: "Code",          label: "برمجة",     Icon: Code },
+  { key: "Cpu",           label: "تقنية",     Icon: Cpu },
+  { key: "Bot",           label: "روبوت",     Icon: Bot },
+  { key: "Rocket",        label: "تطوير",     Icon: Rocket },
   { key: "Globe",         label: "عالم",      Icon: Globe },
   { key: "Languages",     label: "لغات",      Icon: Languages },
-  { key: "Bot",           label: "روبوت",     Icon: Bot },
-  { key: "Cpu",           label: "تقنية",     Icon: Cpu },
-  { key: "FlaskConical",  label: "علوم",      Icon: FlaskConical },
-  { key: "Calculator",    label: "رياضيات",   Icon: Calculator },
-  { key: "Code",          label: "برمجة",     Icon: Code },
   { key: "Music",         label: "موسيقى",    Icon: Music },
   { key: "Palette",       label: "فنون",      Icon: Palette },
-  { key: "Microscope",    label: "أبحاث",     Icon: Microscope },
   { key: "Pencil",        label: "كتابة",     Icon: Pencil },
   { key: "Lightbulb",     label: "أفكار",     Icon: Lightbulb },
+  { key: "Trophy",        label: "إنجاز",     Icon: Trophy },
+  { key: "Award",         label: "شهادة",     Icon: Award },
   { key: "Star",          label: "مميز",      Icon: Star },
+  { key: "lang:EN", label: "EN", badge: LANG_BADGES["lang:EN"] },
+  { key: "lang:FR", label: "FR", badge: LANG_BADGES["lang:FR"] },
+  { key: "lang:ES", label: "ES", badge: LANG_BADGES["lang:ES"] },
+  { key: "lang:DE", label: "DE", badge: LANG_BADGES["lang:DE"] },
+  { key: "lang:AR", label: "AR", badge: LANG_BADGES["lang:AR"] },
 ];
 
 function CourseIcon({ icon, courseId, className = "w-6 h-6" }: { icon?: string; courseId?: string; className?: string }) {
+  const key = icon || courseId || "";
+  const badge = LANG_BADGES[key];
+  if (badge) {
+    const sizeMatch = className.match(/w-(\d+)/);
+    const size = sizeMatch ? Math.round(Number(sizeMatch[1]) * 4) : 24;
+    return (
+      <span
+        style={{ backgroundColor: badge.bg, width: size, height: size, fontSize: Math.round(size * 0.35) }}
+        className="inline-flex items-center justify-center rounded-full text-white font-bold flex-shrink-0"
+      >
+        {badge.text}
+      </span>
+    );
+  }
   const Icon = (icon && COURSE_ICON_MAP[icon]) || (courseId && COURSE_ICON_MAP[courseId]) || BookOpen;
   return <Icon className={className} />;
 }
@@ -632,7 +671,7 @@ function CourseFormModal({
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-2">الأيقونة</label>
                 <div className="grid grid-cols-5 gap-1.5">
-                  {ICON_OPTIONS.map(({ key, label, Icon }) => (
+                  {ICON_OPTIONS.map(({ key, label, Icon, badge }) => (
                     <button
                       key={key}
                       type="button"
@@ -644,7 +683,16 @@ function CourseFormModal({
                           : "border-gray-200 hover:border-gray-400 text-gray-600"
                       }`}
                     >
-                      <Icon className="w-5 h-5" />
+                      {badge ? (
+                        <span
+                          style={{ backgroundColor: badge.bg, width: 20, height: 20, fontSize: 9 }}
+                          className="inline-flex items-center justify-center rounded-full text-white font-bold"
+                        >
+                          {badge.text}
+                        </span>
+                      ) : Icon ? (
+                        <Icon className="w-5 h-5" />
+                      ) : null}
                       <span className="truncate w-full text-center" style={{ fontSize: "10px" }}>{label}</span>
                     </button>
                   ))}

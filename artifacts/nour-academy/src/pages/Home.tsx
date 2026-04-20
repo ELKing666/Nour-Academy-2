@@ -29,6 +29,15 @@ import {
   Pencil,
   Lightbulb,
   Star,
+  Library,
+  BookMarked,
+  Brain,
+  Atom,
+  Trophy,
+  Scroll,
+  Rocket,
+  Dna,
+  Sigma,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -63,11 +72,34 @@ import { translateStrings } from "@/lib/translate";
 const COURSE_ICON_MAP: Record<string, LucideIcon> = {
   GraduationCap, BookOpen, Globe, Languages, Bot, Cpu,
   FlaskConical, Calculator, Code, Music, Palette, Microscope, Pencil, Lightbulb, Star,
+  Library, BookMarked, Brain, Atom, Trophy, Award, Scroll, Rocket, Dna, Sigma,
   "📚": BookOpen, "🌍": Globe, "🇫🇷": Languages, "🤖": Bot,
   bac: GraduationCap, english: Globe, french: Languages, robotics: Bot,
 };
 
+const LANG_BADGES: Record<string, { bg: string; text: string }> = {
+  "lang:EN": { bg: "#1d4ed8", text: "EN" },
+  "lang:FR": { bg: "#1e3a5f", text: "FR" },
+  "lang:ES": { bg: "#c0001a", text: "ES" },
+  "lang:DE": { bg: "#374151", text: "DE" },
+  "lang:AR": { bg: "#065f46", text: "AR" },
+};
+
 function CourseIcon({ icon, courseId, className = "w-12 h-12" }: { icon?: string; courseId?: string; className?: string }) {
+  const key = icon || courseId || "";
+  const badge = LANG_BADGES[key];
+  if (badge) {
+    const sizeMatch = className.match(/w-(\d+)/);
+    const size = sizeMatch ? Math.round(Number(sizeMatch[1]) * 4) : 48;
+    return (
+      <span
+        style={{ backgroundColor: badge.bg, width: size, height: size, fontSize: Math.round(size * 0.35) }}
+        className="inline-flex items-center justify-center rounded-full text-white font-bold flex-shrink-0"
+      >
+        {badge.text}
+      </span>
+    );
+  }
   const Icon = (icon && COURSE_ICON_MAP[icon]) || (courseId && COURSE_ICON_MAP[courseId]) || BookOpen;
   return <Icon className={className} />;
 }
