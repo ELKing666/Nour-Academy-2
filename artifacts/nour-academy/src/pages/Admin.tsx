@@ -675,10 +675,6 @@ function CourseFormModal({
                 />
                 <label htmlFor="is_featured" className="text-xs font-medium text-gray-600">الأكثر طلباً (مميزة)</label>
               </div>
-              <div className="col-span-2">
-                <label className="block text-xs font-medium text-gray-600 mb-1">رابط الصورة (اختياري)</label>
-                <Input value={form.image_url} onChange={(e) => field("image_url", e.target.value)} placeholder="https://..." dir="ltr" />
-              </div>
             </div>
           </div>
 
