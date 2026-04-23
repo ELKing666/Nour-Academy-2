@@ -750,11 +750,19 @@ function Branches() {
       name: t.branches.branch1,
       address: "Hay Arroudj, Centre des Affaires Erriadh N°02, Chlef",
       maps: "https://maps.app.goo.gl/sHU7mRKx5rNMk89SA",
+      underConstruction: false,
     },
     {
       name: t.branches.branch2,
       address: "Hay Arroudj, Centre des Affaires Erriadh N°02, Chlef",
       maps: "https://maps.app.goo.gl/PqruSFBzrdkExpy89",
+      underConstruction: false,
+    },
+    {
+      name: t.branches.branch3,
+      address: "",
+      maps: "",
+      underConstruction: true,
     },
   ];
 
@@ -774,7 +782,7 @@ function Branches() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {branches.map((branch, i) => (
             <motion.div
               key={i}
@@ -782,15 +790,36 @@ function Branches() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="bg-white rounded-2xl p-7 shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-4"
+              className={`relative bg-white rounded-2xl p-7 shadow-md border transition-all duration-300 flex flex-col gap-4 ${
+                branch.underConstruction
+                  ? "border-amber-200 opacity-80"
+                  : "border-gray-100 hover:shadow-xl hover:-translate-y-1"
+              }`}
             >
+              {branch.underConstruction && (
+                <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full border border-amber-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                  {t.branches.underConstruction}
+                </div>
+              )}
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
-                  <MapPin size={22} className="text-primary" />
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${branch.underConstruction ? "bg-amber-50" : "bg-red-50"}`}>
+                  <MapPin size={22} className={branch.underConstruction ? "text-amber-500" : "text-primary"} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800">{branch.name}</h3>
               </div>
-              <p className="text-gray-600 text-sm leading-relaxed flex-1">{branch.address}</p>
+              {branch.address && (
+                <p className="text-gray-600 text-sm leading-relaxed flex-1">{branch.address}</p>
+              )}
+              {!branch.address && (
+                <p className="text-gray-400 text-sm leading-relaxed flex-1 italic">— —</p>
+              )}
+              {branch.underConstruction ? (
+                <span className="inline-flex items-center justify-center gap-2 bg-gray-100 text-gray-400 font-semibold text-sm py-2.5 px-5 rounded-xl cursor-not-allowed">
+                  <MapPin size={16} />
+                  {t.branches.mapsBtn}
+                </span>
+              ) : (
               <a
                 href={branch.maps}
                 target="_blank"
@@ -800,6 +829,7 @@ function Branches() {
                 <MapPin size={16} />
                 {t.branches.mapsBtn}
               </a>
+              )}
             </motion.div>
           ))}
         </div>

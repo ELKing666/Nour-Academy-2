@@ -59,6 +59,8 @@ export const translations = {
       desc: "نور أكاديمي تضم عدة فروع في مدينة شلف، الجزائر، كل فرع ملتزم بتقديم تعليم ذي جودة عالية.",
       branch1: "الفرع الرئيسي",
       branch2: "الفرع الثاني",
+      branch3: "الفرع الثالث",
+      underConstruction: "قيد الإنشاء",
       mapsBtn: "عرض على خرائط جوجل",
     },
     contact: {
@@ -142,6 +144,8 @@ export const translations = {
       desc: "Noor Academy has several branches in Chlef, Algeria, each committed to providing high-quality education.",
       branch1: "Main Branch",
       branch2: "Second Branch",
+      branch3: "Third Branch",
+      underConstruction: "Under Construction",
       mapsBtn: "View on Google Maps",
     },
     contact: {
@@ -225,6 +229,8 @@ export const translations = {
       desc: "Noor Academy possède plusieurs agences à Chlef, Algérie, chacune engagée à fournir un enseignement de haute qualité.",
       branch1: "Agence Principale",
       branch2: "Deuxième Agence",
+      branch3: "Troisième Agence",
+      underConstruction: "En Construction",
       mapsBtn: "Voir sur Google Maps",
     },
     contact: {
@@ -308,6 +314,8 @@ export const translations = {
       desc: "Noor Academy tiene varias sucursales en Chlef, Argelia, cada una comprometida con brindar educación de alta calidad.",
       branch1: "Sucursal Principal",
       branch2: "Segunda Sucursal",
+      branch3: "Tercera Sucursal",
+      underConstruction: "En Construcción",
       mapsBtn: "Ver en Google Maps",
     },
     contact: {
@@ -391,6 +399,8 @@ export const translations = {
       desc: "Noor Academy hat mehrere Standorte in Chlef, Algerien, jeder verpflichtet, qualitativ hochwertige Bildung anzubieten.",
       branch1: "Hauptstandort",
       branch2: "Zweiter Standort",
+      branch3: "Dritter Standort",
+      underConstruction: "Im Aufbau",
       mapsBtn: "Auf Google Maps ansehen",
     },
     contact: {
