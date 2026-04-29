@@ -38,6 +38,8 @@ import {
   Rocket,
   Dna,
   Sigma,
+  Home as HomeIcon,
+  HelpCircle,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -210,10 +212,73 @@ function LanguageDropdown() {
   );
 }
 
+// --- Bottom Tab Bar (mobile only) ---
+function BottomTabBar() {
+  const { t } = useLang();
+  const [active, setActive] = useState("hero");
+
+  const tabs = [
+    { id: "hero",     icon: HomeIcon,   label: t.nav.home },
+    { id: "courses",  icon: BookOpen,   label: t.nav.courses },
+    { id: "branches", icon: MapPin,     label: t.nav.branches },
+    { id: "faq",      icon: HelpCircle, label: t.nav.faq },
+    { id: "contact",  icon: Phone,      label: t.nav.contact },
+  ];
+
+  useEffect(() => {
+    const sections = tabs.map((tab) => document.getElementById(tab.id)).filter(Boolean) as HTMLElement[];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          const topmost = visible.reduce((a, b) =>
+            a.boundingClientRect.top < b.boundingClientRect.top ? a : b
+          );
+          setActive((topmost.target as HTMLElement).id);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleClick = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setActive(id);
+  };
+
+  return (
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-primary/95 backdrop-blur-md border-t border-white/10 flex items-stretch"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
+      {tabs.map(({ id, icon: Icon, label }) => {
+        const isActive = active === id;
+        return (
+          <button
+            key={id}
+            onClick={() => handleClick(id)}
+            className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 transition-all duration-200 ${
+              isActive ? "text-gold" : "text-white/60 hover:text-white"
+            }`}
+          >
+            <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
+            <span className={`text-[10px] font-semibold leading-tight ${isActive ? "text-gold" : "text-white/50"}`}>
+              {label}
+            </span>
+            {isActive && (
+              <span className="absolute bottom-0 w-6 h-0.5 bg-gold rounded-full" style={{ marginBottom: "env(safe-area-inset-bottom)" }} />
+            )}
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
 // --- Navbar ---
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const { t, lang, setLang, dir } = useLang();
 
   useEffect(() => {
@@ -259,47 +324,11 @@ function Navbar() {
           </Button>
         </div>
 
-        {/* Mobile: language toggle + hamburger */}
+        {/* Mobile: language toggle only (navigation handled by BottomTabBar) */}
         <div className="md:hidden flex items-center gap-2">
           <LanguageDropdown />
-          <button
-            className="text-white p-1"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            <Menu size={28} />
-          </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.18 }}
-            dir={dir}
-            className="md:hidden bg-primary/95 backdrop-blur-md shadow-lg absolute top-20 left-0 right-0 p-5 flex flex-col gap-4 text-white text-center font-medium"
-          >
-            <a href="#hero" onClick={() => setMobileOpen(false)}>{t.nav.home}</a>
-            <a href="#about" onClick={() => setMobileOpen(false)}>{t.nav.about}</a>
-            <a href="#courses" onClick={() => setMobileOpen(false)}>{t.nav.courses}</a>
-            <a href="#testimonials" onClick={() => setMobileOpen(false)}>{t.nav.testimonials}</a>
-            <a href="#faq" onClick={() => setMobileOpen(false)}>{t.nav.faq}</a>
-            <a href="#branches" onClick={() => setMobileOpen(false)}>{t.nav.branches}</a>
-
-            <Button
-              asChild
-              className="bg-gold text-primary hover:bg-gold-dark font-bold w-full mt-1"
-              onClick={() => setMobileOpen(false)}
-            >
-              <a href="#contact">{t.nav.contact}</a>
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </nav>
   );
 }
@@ -1157,7 +1186,7 @@ function Footer() {
 export default function Home() {
   const { dir } = useLang();
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden" dir={dir}>
+    <div className="min-h-screen bg-background overflow-x-hidden pb-[calc(64px+env(safe-area-inset-bottom))] md:pb-0" dir={dir}>
       <Navbar />
       <Hero />
       <About />
@@ -1182,19 +1211,21 @@ export default function Home() {
       <Contact />
       <Footer />
 
-      {/* WhatsApp Button */}
+      {/* WhatsApp Button — raised on mobile to sit above the bottom tab bar */}
       <a
         href="https://api.whatsapp.com/send?phone=213770764200&text=%D9%84%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 start-6 z-50 w-14 h-14 flex items-center justify-center rounded-full shadow-xl hover:scale-110 transition-transform"
-        style={{ background: "#25D366" }}
+        className="fixed bottom-6 md:bottom-6 start-6 z-50 w-14 h-14 flex items-center justify-center rounded-full shadow-xl hover:scale-110 transition-transform"
+        style={{ background: "#25D366", bottom: "calc(4rem + env(safe-area-inset-bottom) + 0.75rem)" }}
         aria-label="WhatsApp"
       >
         <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
       </a>
+
+      <BottomTabBar />
     </div>
   );
 }
